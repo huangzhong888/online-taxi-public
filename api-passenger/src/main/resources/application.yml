@@ -4,3 +4,7 @@ server:
 spring:
   application:
     name: api-passenger
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
