@@ -71,15 +71,16 @@ public class VerificationCodeService {
         //根据key获取value
         String codeRedis = stringRedisTemplate.opsForValue().get(key);
         System.out.println("redis中的value"+codeRedis);
+
         //对传进来的验证码进行校验
         if(StringUtils.isBlank(codeRedis)){
             return ResponseResult.fail(CommonStatusEnum.FAIL.getCode(),CommonStatusEnum.FAIL.getValue());
         }
         if(!verificationCode.trim().equals(codeRedis)){
             return ResponseResult.fail(CommonStatusEnum.FAIL.getCode(),CommonStatusEnum.FAIL.getValue());
-
         }
         System.out.println("对传进来的验证码进行校验");
+
         //判断原来是否有用户，有即为登录，否则注册
         System.out.println("判断原来是否有用户，有即为登录，否则注册");
         //颁发令牌
