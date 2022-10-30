@@ -20,7 +20,6 @@ public class NumberCodeController {
 
     @GetMapping("/numberCode/{size}")
     public ResponseResult number(@PathVariable("size") int size){
-        System.out.println("size:"+ size);
         //生成验证码
         int numberCode = (int)((Math.random() * 9 + 1) * Math.pow(10, size-1));
 

@@ -11,11 +11,20 @@ import lombok.experimental.Accessors;
  * @version: 1.0
  */
 @Data
-@Accessors(chain = true)
+@Accessors(chain = true) //开启链式调用
 public class ResponseResult<T> {
     private int code;
     private String message;
     private T data;
+
+    /**
+     * 无参的构造方法
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseResult success(){
+        return new ResponseResult().setCode(CommonStatusEnum.SUCCESS.getCode()).setMessage(CommonStatusEnum.SUCCESS.getValue());
+    }
 
     /**
      * 响应成功
