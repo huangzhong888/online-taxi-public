@@ -26,13 +26,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!--引用自己的通用模块-->
-        <dependency>
-            <artifactId>internal-common</artifactId>
-            <groupId>com.hz</groupId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
 </project>

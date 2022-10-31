@@ -1,4 +1,4 @@
-package com.hz.apipassenger.request;
+package com.hz.internal.common.request;
 
 import lombok.Data;
 
