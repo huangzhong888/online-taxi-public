@@ -30,7 +30,7 @@ public class UserService {
         Map<String , Object> map = new HashMap<>();
         map.put("passenger_phone",passengerPhone);
         List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
-       
+
         //判断用户是否存在
         if(passengerUsers.size()==0){
             //用户不存在，新增用户
