@@ -3,10 +3,12 @@ package com.hz.apipassenger.service;
 import com.hz.apipassenger.remote.ServicePassengerUserClient;
 import com.hz.apipassenger.remote.ServiceVerificationCodeClient;
 import com.hz.internal.common.constant.CommonStatusEnum;
+import com.hz.internal.common.constant.IdentityConstant;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.request.VerificationCodeDTO;
 import com.hz.internal.common.response.NumberCodeResponse;
 import com.hz.internal.common.response.TokenResponse;
+import com.hz.internal.common.util.JwtUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -91,11 +93,12 @@ public class VerificationCodeService {
         VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
         verificationCodeDTO.setPassengerPhone(passengerPhone);
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
+
         //颁发令牌
-        System.out.println("颁发令牌");
+        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY);
         //响应结果
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken("token value");
+        tokenResponse.setToken(token);
         return ResponseResult.success(tokenResponse);
     }
 }

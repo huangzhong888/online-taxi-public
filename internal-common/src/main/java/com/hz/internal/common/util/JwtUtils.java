@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.hz.internal.common.dto.TokenResult;
+import com.hz.internal.common.response.TokenResponse;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -18,7 +20,10 @@ import java.util.Map;
  * @version: 1.0
  */
 public class JwtUtils {
-    public static final String JWT_KEY = "passengerPhone";
+    public static final String JWT_KEY_PHONE = "passengerPhone";
+
+    //乘客是1 司机是2
+    public static final String JWT_KEY_IDENTITY = "identity";
 
     //盐
     public static final String SIGN = "hz!@#$";
@@ -28,9 +33,10 @@ public class JwtUtils {
      * @param passengerPhone
      * @return
      */
-    private static String generatorToken(String passengerPhone){
+    public static String generatorToken(String passengerPhone,String identity){
         Map<String,String> map = new HashMap<>();
-        map.put("JWT_KEY",passengerPhone);
+        map.put(JWT_KEY_PHONE,passengerPhone);
+        map.put(JWT_KEY_IDENTITY,identity);
         //token过期时间
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,1);
@@ -57,9 +63,13 @@ public class JwtUtils {
      * @param token
      * @return
      */
-    public static String parseToken(String token){
+    public static TokenResult parseToken(String token){
         DecodedJWT verify = JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token);
-        Claim claim = verify.getClaim(JWT_KEY);
-        return claim.toString();
+        String phone = verify.getClaim(JWT_KEY_PHONE).toString();
+        String identity = verify.getClaim(JWT_KEY_IDENTITY).toString();
+        TokenResult tokenResult = new TokenResult();
+        tokenResult.setPhone(phone);
+        tokenResult.setIdentity(identity);
+        return tokenResult;
     }
 }
