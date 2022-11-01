@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service-passenger-user</artifactId>
+    <packaging>war</packaging>
 
     <dependencies>
         <!--用springboot做web项目的必备依赖-->
