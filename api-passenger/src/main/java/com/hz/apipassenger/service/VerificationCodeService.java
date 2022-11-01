@@ -1,8 +1,10 @@
 package com.hz.apipassenger.service;
 
+import com.hz.apipassenger.remote.ServicePassengerUserClient;
 import com.hz.apipassenger.remote.ServiceVerificationCodeClient;
 import com.hz.internal.common.constant.CommonStatusEnum;
 import com.hz.internal.common.dto.ResponseResult;
+import com.hz.internal.common.request.VerificationCodeDTO;
 import com.hz.internal.common.response.NumberCodeResponse;
 import com.hz.internal.common.response.TokenResponse;
 import org.apache.commons.lang.StringUtils;
@@ -20,8 +22,12 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class VerificationCodeService {
+
     @Autowired
     private ServiceVerificationCodeClient serviceVerificationCodeClient;
+
+    @Autowired
+    private ServicePassengerUserClient servicePassengerUserClient;
 
     private String verificationCodePrefix = "passenger-verification-Code-";
 
@@ -81,8 +87,10 @@ public class VerificationCodeService {
         }
         System.out.println("对传进来的验证码进行校验");
 
-        //判断原来是否有用户，有即为登录，否则注册
-        System.out.println("判断原来是否有用户，有即为登录，否则注册");
+        //(进行远程服务调用)判断原来是否有用户，有即为登录，否则注册
+        VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();
+        verificationCodeDTO.setPassengerPhone(passengerPhone);
+        servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
         //颁发令牌
         System.out.println("颁发令牌");
         //响应结果

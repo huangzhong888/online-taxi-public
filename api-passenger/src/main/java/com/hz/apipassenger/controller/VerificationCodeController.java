@@ -1,8 +1,8 @@
 package com.hz.apipassenger.controller;
 
-import com.hz.apipassenger.request.VerificationCodeDTO;
 import com.hz.apipassenger.service.VerificationCodeService;
 import com.hz.internal.common.dto.ResponseResult;
+import com.hz.internal.common.request.VerificationCodeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -22,7 +22,7 @@ public class NumberCodeController {
     public ResponseResult number(@PathVariable("size") int size){
         //生成验证码
         int numberCode = (int)((Math.random() * 9 + 1) * Math.pow(10, size-1));
-
+        System.out.println(numberCode);
         //定义返回值
         NumberCodeResponse response = new NumberCodeResponse();
         response.setNumberCode(numberCode);
