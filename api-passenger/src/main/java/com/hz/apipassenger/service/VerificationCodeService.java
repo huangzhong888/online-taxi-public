@@ -4,6 +4,7 @@ import com.hz.apipassenger.remote.ServicePassengerUserClient;
 import com.hz.apipassenger.remote.ServiceVerificationCodeClient;
 import com.hz.internal.common.constant.CommonStatusEnum;
 import com.hz.internal.common.constant.IdentityConstant;
+import com.hz.internal.common.constant.TokenConstant;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.request.VerificationCodeDTO;
 import com.hz.internal.common.response.NumberCodeResponse;
@@ -90,14 +91,22 @@ public class VerificationCodeService {
         servicePassengerUserClient.loginOrRegister(verificationCodeDTO);
 
         //颁发令牌
-        String token = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY);
-        //将token存到redis
-        String tokenKey = RedisPrefixUtils.generateTokenKey(passengerPhone,IdentityConstant.PASSENGER_IDENTITY);
-        stringRedisTemplate.opsForValue().set(tokenKey,token,30,TimeUnit.DAYS);
+        String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY, TokenConstant.ACCESS_TOKEN);
+        String refreshToken = JwtUtils.generatorToken(passengerPhone, IdentityConstant.PASSENGER_IDENTITY, TokenConstant.REFRESH_TOKEN);
+
+
+        //将accessToken存到redis
+        String accessTokenKey = RedisPrefixUtils.generateTokenKey(passengerPhone,IdentityConstant.PASSENGER_IDENTITY,TokenConstant.ACCESS_TOKEN);
+        stringRedisTemplate.opsForValue().set(accessTokenKey,accessToken,30,TimeUnit.DAYS);
+
+        //将refreshToken存到redis
+        String refreshTokenKey = RedisPrefixUtils.generateTokenKey(passengerPhone,IdentityConstant.PASSENGER_IDENTITY,TokenConstant.REFRESH_TOKEN);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey,refreshToken,31,TimeUnit.DAYS);
 
         //响应结果
         TokenResponse tokenResponse = new TokenResponse();
-        tokenResponse.setToken(token);
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
         return ResponseResult.success(tokenResponse);
     }
 }

@@ -22,12 +22,13 @@ public class RedisPrefixUtils {
     }
 
     /**
-     * 生成token的键
+     * 生成token的key
      * @param Phone
      * @param identity
+     * @param tokenType
      * @return
      */
-    public static String generateTokenKey(String Phone,String identity){
-        return tokenPrefix+Phone + "-"+identity;
+    public static String generateTokenKey(String Phone,String identity,String tokenType){
+        return tokenPrefix+Phone + "-"+identity+"-"+tokenType;
     }
 }
