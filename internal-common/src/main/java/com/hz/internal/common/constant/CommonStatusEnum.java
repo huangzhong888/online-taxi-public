@@ -14,7 +14,12 @@ public enum CommonStatusEnum {
 
     //token的提示
     TOKEN_ERROR(1199,"token 错误"),
+
+    //用户的提示
+    USER_NOT_EXISTS(1200,"用户不存在"),
+
     SUCCESS(1,"success"),
+
     FAIL(0,"fail")
     ;
 

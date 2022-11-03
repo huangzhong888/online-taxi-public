@@ -20,8 +20,9 @@ public class UserService {
     public ResponseResult getUserByAccessToken(String accessToken){
         log.info("accessToken"+accessToken);
         //解析token,获取手机号
-        TokenResult tokenResult = JwtUtils.parseToken(accessToken);
+        TokenResult tokenResult = JwtUtils.checkToken(accessToken);
         String phone = tokenResult.getPhone();
+        log.info("手机号"+phone);
         //根据手机号获取用户信息
         PassengerUser passengerUser = new PassengerUser();
         passengerUser.setProfilePhoto("头像");

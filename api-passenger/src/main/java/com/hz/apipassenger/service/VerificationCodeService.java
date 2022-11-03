@@ -81,9 +81,8 @@ public class VerificationCodeService {
             return ResponseResult.fail(CommonStatusEnum.FAIL.getCode(),CommonStatusEnum.FAIL.getValue());
         }
         if(!verificationCode.trim().equals(codeRedis)){
-            return ResponseResult.fail(CommonStatusEnum.FAIL.getCode(),CommonStatusEnum.FAIL.getValue());
+            return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
         }
-        System.out.println("对传进来的验证码进行校验");
 
         //(进行远程服务调用)判断原来是否有用户，有即为登录，否则注册
         VerificationCodeDTO verificationCodeDTO = new VerificationCodeDTO();

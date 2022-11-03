@@ -4,9 +4,7 @@ import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.request.VerificationCodeDTO;
 import com.hz.servicepassengeruser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Auther: huangzhong
@@ -27,5 +25,15 @@ public class UserController {
         System.out.println("手机号"+passengerPhone);
         //调用service从数据库查询数据
         return userService.loginOrRegister(passengerPhone);
+    }
+
+    @GetMapping("/user")
+    public ResponseResult getUser(@RequestBody VerificationCodeDTO verificationCodeDTO ){
+        String passengerPhone = verificationCodeDTO.getPassengerPhone();
+
+        //调用service层（controller层一般接收参数）
+        return  userService.getUserByPhone(passengerPhone);
+
+
     }
 }

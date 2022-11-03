@@ -1,5 +1,7 @@
 package com.hz.servicepassengeruser.service;
 
+import com.hz.internal.common.constant.CommonStatusEnum;
+import com.hz.internal.common.dto.PassengerUser;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.servicepassengeruser.mapper.PassengerUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +49,26 @@ public class UserService {
         //存在，则登录
         return ResponseResult.success();
     }
+
+    /**
+     * 根据手机号查询用户
+     * @param passengerPhone
+     * @return
+     */
+    public ResponseResult getUserByPhone(String passengerPhone){
+        //根据手机号查询用户信息
+        Map<String,Object> map = new HashMap<>();
+        map.put("passengerPhone",passengerPhone);
+        List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
+
+        if(passengerUsers.size() == 0){
+            return ResponseResult.fail(CommonStatusEnum.USER_NOT_EXISTS.getCode(),CommonStatusEnum.USER_NOT_EXISTS.getValue());
+        }else {
+           //从返回的map集合中拿到用户(其实只有一个用户放在map集合中)
+            PassengerUser passengerUser = passengerUsers.get(0);
+            //返回
+            return ResponseResult.success(passengerUser);
+        }
+    }
+
 }
