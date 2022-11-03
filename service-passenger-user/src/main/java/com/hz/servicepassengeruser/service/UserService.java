@@ -1,12 +1,9 @@
 package com.hz.servicepassengeruser.service;
 
 import com.hz.internal.common.dto.ResponseResult;
-import com.hz.internal.common.request.VerificationCodeDTO;
-import com.hz.servicepassengeruser.dto.PassengerUser;
 import com.hz.servicepassengeruser.mapper.PassengerUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

@@ -1,7 +1,6 @@
 package com.hz.servicepassengeruser.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hz.servicepassengeruser.dto.PassengerUser;
 import org.springframework.stereotype.Repository;
 
 /**

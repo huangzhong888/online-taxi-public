@@ -1,9 +1,8 @@
-package com.hz.servicepassengeruser.dto;
+package com.hz.internal.common.dto;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @Auther: huangzhong
@@ -13,7 +12,7 @@ import java.util.Date;
  */
 
 @Data
-public class PassengerUser{
+public class PassengerUser {
     //bigint类型对应Java中Long类型
     private Long id;
 
@@ -29,4 +28,6 @@ public class PassengerUser{
     private byte passengerGender;
 
     private byte state;
+
+    private String profilePhoto;
 }
