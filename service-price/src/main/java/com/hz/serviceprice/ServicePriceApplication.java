@@ -1,4 +1,4 @@
-package com.hz.service.price;
+package com.hz.serviceprice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
