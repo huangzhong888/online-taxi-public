@@ -23,5 +23,5 @@ public interface ServicePassengerUserClient {
      ResponseResult loginOrRegister(@RequestBody VerificationCodeDTO verificationCodeDTO);
 
     @GetMapping("/user/{phone}")
-    ResponseResult<PassengerUser> getUserByPhone(@PathVariable("phone") String passengerPhone);
+    ResponseResult getUserByPhone(@PathVariable("phone") String phone);
 }

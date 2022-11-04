@@ -28,10 +28,10 @@ public class UserController {
     }
 
     @GetMapping("/user/{phone}")
-    public ResponseResult getUser(@PathVariable("phone") String passengerPhone ){
+    public ResponseResult getUserByPhone(@PathVariable("phone") String phone ){
 
         //调用service层（controller层一般接收参数）
-        return  userService.getUserByPhone(passengerPhone);
+        return userService.getUserByPhone(phone);
 
 
     }

@@ -58,7 +58,7 @@ public class UserService {
     public ResponseResult getUserByPhone(String passengerPhone){
         //根据手机号查询用户信息
         Map<String,Object> map = new HashMap<>();
-        map.put("passengerPhone",passengerPhone);
+        map.put("passenger_phone",passengerPhone);
         List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
 
         if(passengerUsers.size() == 0){
