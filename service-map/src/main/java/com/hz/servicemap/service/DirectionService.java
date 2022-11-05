@@ -1,0 +1,31 @@
+package com.hz.servicemap.service;
+
+import com.hz.internal.common.dto.ResponseResult;
+import com.hz.internal.common.response.DirectionResponse;
+import org.springframework.stereotype.Service;
+
+/**
+ * @Auther: huangzhong
+ * @Date: 2022/11/4 - 11 - 04 - 22:59
+ * @Description: com.hz.servicemap.service
+ * @version: 1.0
+ */
+@Service
+public class DirectionService {
+
+    /**
+     * 根据起点和终点经纬度得到距离（米）和时常（分钟）
+     * @param depLongitude
+     * @param depLatitude
+     * @param destLongitude
+     * @param destLatitude
+     * @return
+     */
+    public ResponseResult driving(String depLongitude,String depLatitude,String destLongitude,String destLatitude){
+
+        DirectionResponse directionResponse = new DirectionResponse();
+        directionResponse.setDistance(12);
+        directionResponse.setDuration(22);
+        return ResponseResult.success(directionResponse);
+    }
+}
