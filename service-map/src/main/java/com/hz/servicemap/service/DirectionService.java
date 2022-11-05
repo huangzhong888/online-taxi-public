@@ -2,6 +2,8 @@ package com.hz.servicemap.service;
 
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.response.DirectionResponse;
+import com.hz.servicemap.remote.MapDirectionClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DirectionService {
 
+    @Autowired
+    private MapDirectionClient mapDirectionClient;
+
     /**
      * 根据起点和终点经纬度得到距离（米）和时常（分钟）
      * @param depLongitude
@@ -23,9 +28,9 @@ public class DirectionService {
      */
     public ResponseResult driving(String depLongitude,String depLatitude,String destLongitude,String destLatitude){
 
-        DirectionResponse directionResponse = new DirectionResponse();
-        directionResponse.setDistance(12);
-        directionResponse.setDuration(22);
-        return ResponseResult.success(directionResponse);
+        //调用第三方的地图接口
+        DirectionResponse direction = mapDirectionClient.direction(depLongitude, depLatitude, destLongitude, destLatitude);
+
+        return ResponseResult.success(direction);
     }
 }
