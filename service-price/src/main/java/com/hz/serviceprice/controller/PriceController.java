@@ -27,10 +27,6 @@ public class PriceController {
         String depLongitude = forecastPriceDTO.getDepLongitude();
         String destLatitude = forecastPriceDTO.getDestLatitude();
         String destLongitude = forecastPriceDTO.getDestLongitude();
-        priceService.forecastPrice(depLongitude,depLatitude,destLongitude,destLatitude);
-
-        PriceResponse priceResponse = new PriceResponse();
-        priceResponse.setPrice(12.22);
-        return ResponseResult.success(priceResponse);
+        return priceService.forecastPrice(depLongitude,depLatitude,destLongitude,destLatitude);
     }
 }
