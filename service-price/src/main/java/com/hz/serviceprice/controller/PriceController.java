@@ -2,6 +2,7 @@ package com.hz.serviceprice.controller;
 
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.request.ForecastPriceDTO;
+import com.hz.internal.common.response.PriceResponse;
 import com.hz.serviceprice.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,10 @@ public class PriceController {
         String depLongitude = forecastPriceDTO.getDepLongitude();
         String destLatitude = forecastPriceDTO.getDestLatitude();
         String destLongitude = forecastPriceDTO.getDestLongitude();
-        return priceService.forecastPrice(depLongitude,depLatitude,destLongitude,destLatitude);
+        priceService.forecastPrice(depLongitude,depLatitude,destLongitude,destLatitude);
 
+        PriceResponse priceResponse = new PriceResponse();
+        priceResponse.setPrice(12.22);
+        return ResponseResult.success(priceResponse);
     }
 }
