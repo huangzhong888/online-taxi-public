@@ -1,8 +1,11 @@
 package com.hz.apipassenger.service;
 
+import com.hz.apipassenger.remote.ServicePriceClient;
 import com.hz.internal.common.dto.ResponseResult;
+import com.hz.internal.common.request.ForecastPriceDTO;
 import com.hz.internal.common.response.PriceResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class PriceService {
+
+    @Autowired
+    private ServicePriceClient servicePriceClient;
 
     /**
      * 根据出发地和目的地的经纬度预估价格
@@ -28,9 +34,11 @@ public class PriceService {
         log.info(depLatitude+""+depLongitude+""+destLatitude+""+destLongitude);
 
         log.info("调用远程计价服务预估价格");
-
-        PriceResponse priceResponse = new PriceResponse();
-        priceResponse.setPrice(155.45);
-        return ResponseResult.success(priceResponse);
+        ForecastPriceDTO forecastPriceDTO = new ForecastPriceDTO();
+        forecastPriceDTO.setDepLongitude(depLongitude);
+        forecastPriceDTO.setDepLatitude(depLatitude);
+        forecastPriceDTO.setDestLongitude(destLongitude);
+        forecastPriceDTO.setDestLatitude(destLatitude);
+        return servicePriceClient.forecastPrice(forecastPriceDTO);
     }
 }
