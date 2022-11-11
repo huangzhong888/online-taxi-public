@@ -21,6 +21,9 @@ public enum CommonStatusEnum {
     //计价规则不存在提示 1300-1399
     PRICE_RULE_EMPTY(1300,"计价规则不存在"),
 
+    //区域地图信息 1400-1499
+    MAP_DISTRICT_ERROR(1400,"请求地图错误"),
+
     SUCCESS(1,"success"),
 
     FAIL(0,"fail")
