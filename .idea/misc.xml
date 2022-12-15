@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/api-boss" />
     <file type="web" url="file://$PROJECT_DIR$/api-passenger" />
     <file type="web" url="file://$PROJECT_DIR$/service-driver-user" />
     <file type="web" url="file://$PROJECT_DIR$/service-map" />
