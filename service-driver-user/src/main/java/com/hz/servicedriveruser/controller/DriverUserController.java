@@ -26,4 +26,10 @@ public class DriverUserController {
         log.info(JSONObject.fromObject(driverUser).toString());
         return driverUserService.addDriverUser(driverUser);
     }
+
+    @PutMapping("/users")
+    public ResponseResult updateUser(@RequestBody DriverUser driverUser){
+        log.info(JSONObject.fromObject(driverUser).toString());
+        return driverUserService.updateDriverUser(driverUser);
+    }
 }
