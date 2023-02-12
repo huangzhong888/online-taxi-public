@@ -4,6 +4,7 @@ import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -16,4 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface ServiceDriverUserClient {
     @PostMapping("/users")
      ResponseResult addDriverUser(@RequestBody DriverUser driverUser);
+
+    @PutMapping("/users")
+    ResponseResult updateDriverUser(@RequestBody DriverUser driverUser);
 }
