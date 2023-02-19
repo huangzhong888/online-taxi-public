@@ -1,6 +1,8 @@
 package com.hz.apiboss.controller;
 
+import com.hz.apiboss.service.CarService;
 import com.hz.apiboss.service.DriverUserService;
+import com.hz.internal.common.dto.Car;
 import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class DriverUserController {
     @Autowired
     private DriverUserService driverUserService;
+
+    @Autowired
+    private CarService carService;
 
     /**
      * 添加司机
@@ -40,5 +45,13 @@ public class DriverUserController {
     @PutMapping("/driver-user")
     public ResponseResult updateDriverUser(@RequestBody DriverUser driverUser){
         return  driverUserService.updateDriverUser(driverUser);
+    }
+
+    /**
+     * 添加车辆信息
+     */
+    @PostMapping("/car")
+    public ResponseResult addCar(@RequestBody Car car){
+        return carService.addCar(car);
     }
 }

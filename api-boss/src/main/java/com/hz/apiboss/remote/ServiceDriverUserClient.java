@@ -1,5 +1,6 @@
 package com.hz.apiboss.remote;
 
+import com.hz.internal.common.dto.Car;
 import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -20,4 +21,7 @@ public interface ServiceDriverUserClient {
 
     @PutMapping("/users")
     ResponseResult updateDriverUser(@RequestBody DriverUser driverUser);
+
+    @PostMapping("/car")
+    ResponseResult addCar(@RequestBody Car car);
 }
