@@ -9,7 +9,7 @@ package com.hz.internal.common.util;
 public class RedisPrefixUtils {
 
     //验证码的前缀
-    private static String verificationCodePrefix = "passenger-verification-Code-";
+    private static String verificationCodePrefix = "verification-Code-";
 
     //token的前缀
     private static String tokenPrefix = "token-";
@@ -17,8 +17,8 @@ public class RedisPrefixUtils {
      * 根据手机号生成key
      * @return
      */
-    public static String generateKeyByPhone(String passengerPhone){
-        return verificationCodePrefix + passengerPhone;
+    public static String generateKeyByPhone(String Phone,String identity){
+        return verificationCodePrefix + identity +"-"+ Phone;
     }
 
     /**
