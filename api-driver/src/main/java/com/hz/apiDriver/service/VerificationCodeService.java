@@ -5,12 +5,16 @@ import com.hz.apiDriver.remote.ServiceVerificationCodeClient;
 import com.hz.internal.common.constant.CommonStatusEnum;
 import com.hz.internal.common.constant.DriverCarConstants;
 import com.hz.internal.common.constant.IdentityConstant;
+import com.hz.internal.common.constant.TokenConstant;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.request.VerificationCodeDTO;
 import com.hz.internal.common.response.DriverUserExistsResponse;
 import com.hz.internal.common.response.NumberCodeResponse;
+import com.hz.internal.common.response.TokenResponse;
+import com.hz.internal.common.util.JwtUtils;
 import com.hz.internal.common.util.RedisPrefixUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -57,5 +61,49 @@ public class VerificationCodeService {
         stringRedisTemplate.opsForValue().set(key,numberCode+"",2, TimeUnit.MINUTES);
 
         return ResponseResult.success("");
+    }
+
+    /**
+     * 校验验证码
+     * @param driverPhone 手机号
+     * @param verificationCode 验证码
+     * @return
+     */
+    public ResponseResult checkCode(String driverPhone,String verificationCode){
+        //根据手机号去redis读取验证码
+        System.out.println("根据手机号去redis读取验证码");
+        //生成key
+        String key = RedisPrefixUtils.generateKeyByPhone(driverPhone,IdentityConstant.DRIVER_IDENTITY);
+        //根据key获取value
+        String codeRedis = stringRedisTemplate.opsForValue().get(key);
+        System.out.println("redis中的value"+codeRedis);
+
+        //对传进来的验证码进行校验
+        if(StringUtils.isBlank(codeRedis)){
+            return ResponseResult.fail(CommonStatusEnum.FAIL.getCode(),CommonStatusEnum.FAIL.getValue());
+        }
+        if(!verificationCode.trim().equals(codeRedis)){
+            return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
+        }
+
+
+        //颁发令牌
+        String accessToken = JwtUtils.generatorToken(driverPhone, IdentityConstant.DRIVER_IDENTITY, TokenConstant.ACCESS_TOKEN);
+        String refreshToken = JwtUtils.generatorToken(driverPhone, IdentityConstant.DRIVER_IDENTITY, TokenConstant.REFRESH_TOKEN);
+
+
+        //将accessToken存到redis
+        String accessTokenKey = RedisPrefixUtils.generateTokenKey(driverPhone,IdentityConstant.DRIVER_IDENTITY,TokenConstant.ACCESS_TOKEN);
+        stringRedisTemplate.opsForValue().set(accessTokenKey,accessToken,30,TimeUnit.DAYS);
+
+        //将refreshToken存到redis
+        String refreshTokenKey = RedisPrefixUtils.generateTokenKey(driverPhone,IdentityConstant.DRIVER_IDENTITY,TokenConstant.REFRESH_TOKEN);
+        stringRedisTemplate.opsForValue().set(refreshTokenKey,refreshToken,31,TimeUnit.DAYS);
+
+        //响应结果
+        TokenResponse tokenResponse = new TokenResponse();
+        tokenResponse.setAccessToken(accessToken);
+        tokenResponse.setRefreshToken(refreshToken);
+        return ResponseResult.success(tokenResponse);
     }
 }

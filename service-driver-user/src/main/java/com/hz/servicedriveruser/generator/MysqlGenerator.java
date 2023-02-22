@@ -27,7 +27,7 @@ public class MysqlGenerator {
                             "C:\\Users\\ASUS\\Desktop\\飞滴出行网约车\\service-driver-user\\src\\main\\java\\com\\hz\\servicedriveruser\\mapper"));
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("driver_car_binding_relationship");
+                    builder.addInclude("driver_user_work_status");
                 })
                 .templateEngine(new FreemarkerTemplateEngine())
                 .execute();
