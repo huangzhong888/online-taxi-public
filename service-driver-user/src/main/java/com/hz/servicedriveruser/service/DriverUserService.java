@@ -1,5 +1,7 @@
 package com.hz.servicedriveruser.service;
 
+import com.hz.internal.common.constant.CommonStatusEnum;
+import com.hz.internal.common.constant.DriverCarConstants;
 import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.servicedriveruser.mapper.DriverUserMapper;
@@ -8,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: huangzhong
@@ -34,5 +39,17 @@ public class DriverUserService {
         driverUser.setGmtModified(now);
         driverUserMapper.updateById(driverUser);
         return ResponseResult.success("");
+    }
+
+    public ResponseResult<DriverUser> getDriverUserByPhone(String driverPhone) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("driver_phone", driverPhone);
+        map.put("state", DriverCarConstants.DRIVER_STATE_VALID);
+        List<DriverUser> driverUsers = driverUserMapper.selectByMap(map);
+        if (driverUsers.isEmpty()) {
+            return ResponseResult.fail(CommonStatusEnum.DRIVER_NOT_EXIST.getCode(),CommonStatusEnum.DRIVER_NOT_EXIST.getValue());
+        }
+        DriverUser driverUser = driverUsers.get(0);
+        return ResponseResult.success(driverUser);
     }
 }
