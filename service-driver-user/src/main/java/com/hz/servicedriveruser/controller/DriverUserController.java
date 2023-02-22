@@ -1,5 +1,6 @@
 package com.hz.servicedriveruser.controller;
 
+import com.hz.internal.common.constant.DriverCarConstants;
 import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
 import com.hz.internal.common.response.DriverUserExistsResponse;
@@ -50,13 +51,13 @@ public class DriverUserController {
      * @return
      */
     @GetMapping("/check-driver/{driverPhone}")
-    public ResponseResult getUser(@PathVariable("driverPhone") String driverPhone){
+    public ResponseResult<DriverUserExistsResponse> getUser(@PathVariable("driverPhone") String driverPhone){
         ResponseResult<DriverUser> driverUserByPhone = driverUserService.getDriverUserByPhone(driverPhone);
         DriverUser driverUserDB = driverUserByPhone.getData();
         DriverUserExistsResponse response = new DriverUserExistsResponse();
-        int ifExists= 1;
+        int ifExists= DriverCarConstants.DRIVER_EXISTS;
         if(driverUserDB == null){
-            ifExists = 0;
+            ifExists = DriverCarConstants.DRIVER_NOT_EXISTS;
             response.setDriverPhone(driverPhone);
             response.setIfExists(ifExists);
         }else {

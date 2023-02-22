@@ -2,7 +2,10 @@ package com.hz.apiDriver.remote;
 
 import com.hz.internal.common.dto.DriverUser;
 import com.hz.internal.common.dto.ResponseResult;
+import com.hz.internal.common.response.DriverUserExistsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @version: 1.0
  */
 @FeignClient("service-driver-user")
-public interface ServideDriverUserClient {
+public interface ServiceDriverUserClient {
 
     @PutMapping("/users")
     ResponseResult updateUser(@RequestBody DriverUser driverUser);
+
+    @GetMapping("/check-driver/{driverPhone}")
+    ResponseResult<DriverUserExistsResponse> checkDriver(@PathVariable("driverPhone") String driverPhone);
 }
